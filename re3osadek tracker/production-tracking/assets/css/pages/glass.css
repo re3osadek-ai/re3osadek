@@ -1,0 +1,255 @@
+/* ========================================
+   🪟 REAOSADEK - Glass Module CSS
+   ======================================== */
+.glass-container { padding: 20px; direction: rtl; font-family: 'Cairo', sans-serif; }
+
+.glass-header-nav { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 15px 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+.glass-header-nav h2 { margin: 0; font-size: 18px; font-weight: bold; }
+.glass-tabs button { background: #e2e8f0; border: none; padding: 8px 16px; margin-left: 5px; border-radius: 6px; cursor: pointer; font-weight: bold; color: #475569; transition: 0.3s; }
+.glass-tabs button:hover { background: #cbd5e1; }
+.glass-tabs button.active { background: #2563eb; color: #fff; }
+
+.glass-tab-content { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.d-none { display: none !important; }
+
+.glass-form-header { display: flex; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 15px; }
+.gl-btn { padding: 8px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; color: #fff; }
+.gl-btn-primary { background: #3b82f6; } .gl-btn-primary:hover { background: #2563eb; }
+.gl-btn-danger { background: #ef4444; } .gl-btn-danger:hover { background: #dc2626; }
+.gl-btn-success { background: #10b981; } .gl-btn-success:hover { background: #059669; }
+.gl-btn-sm { padding: 4px 10px; font-size: 12px; font-weight:bold; color:white; border:none; border-radius:4px; cursor:pointer;}
+
+.glass-pdf-area { border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; }
+.glass-pdf-title { text-align: center; font-size: 22px; font-weight: bold; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 20px; }
+
+.glass-grid-6 { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+.glass-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
+.gl-input-group { background: #d1fae5; border: 1px solid #6ee7b7; padding: 10px; border-radius: 6px; text-align: center; }
+.gl-input-group label { display: block; font-size: 12px; font-weight: bold; color: #065f46; margin-bottom: 5px; }
+.gl-input-group input, .gl-input-group select { width: 100%; border: none; background: transparent; text-align: center; font-weight: bold; border-bottom: 1px solid #a7f3d0; outline: none; }
+.text-danger { color: #ef4444; }
+
+.glass-table { width: 100%; border-collapse: collapse; text-align: center; font-size: 13px; }
+.glass-table th { background: #a7f3d0; border: 1px solid #059669; padding: 8px; color: #064e3b; }
+.glass-table td { border: 1px solid #059669; padding: 5px; }
+.glass-table input, .glass-table select { width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px; text-align: center; }
+
+.glass-counters-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px; }
+.gl-counter { padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #e2e8f0; }
+.gl-counter p:first-child { margin: 0 0 5px 0; font-size: 12px; color: #64748b; }
+.gl-counter p:last-child { margin: 0; font-size: 24px; font-weight: bold; }
+.bg-blue-light { background: #eff6ff; color: #2563eb; }
+.bg-yellow-light { background: #fefce8; color: #ca8a04; }
+.bg-green-light { background: #f0fdf4; color: #16a34a; }
+.bg-purple-light { background: #faf5ff; color: #9333ea; }
+
+.glass-filters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 20px; }
+.glass-filters input, .glass-filters select { padding: 8px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 13px; }
+/* ========================================
+   🖨️ تنسيقات المعاينة والطباعة (PDF)
+   ======================================== */
+.gl-input-group-inline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid #cbd5e1;
+    padding: 0 10px;
+}
+.gl-input-group-inline:last-child {
+    border-right: none;
+}
+.gl-input-group-inline label {
+    font-size: 11px;
+    font-weight: bold;
+    color: #64748b;
+    margin-bottom: 3px;
+}
+.gl-input-group-inline input, .gl-input-group-inline select {
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+    outline: none;
+}
+
+/* إخفاء العناصر غير المرغوبة أثناء توليد الـ PDF */
+.pdf-export-mode .pdf-hide,
+.pdf-export-mode .pdf-hide-col {
+    display: none !important;
+}
+.pdf-export-mode .pdf-input-inline,
+.pdf-export-mode .glass-table input, 
+.pdf-export-mode .glass-table select {
+    border: none !important;
+    background: transparent !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.pdf-export-mode select {
+    background-image: none !important;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+/* ========================================
+   📊 تنسيقات لوحة تحكم الزجاج (Dashboard)
+   ======================================== */
+.gl-dash-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+/* أزرار التصدير */
+.gl-export-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.gl-exp-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: opacity 0.2s;
+}
+.gl-exp-btn:hover { opacity: 0.9; }
+.gl-exp-pdf { background: #1d4ed8; }
+.gl-exp-excel { background: #15803d; }
+.gl-exp-open { background: #d97706; }
+.gl-exp-done { background: #059669; }
+
+/* تصغير الفلاتر والخط Bold */
+.gl-filters-compact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+.gl-filters-compact input,
+.gl-filters-compact select {
+    width: auto !important;
+    min-width: 145px;
+    max-width: 190px;
+    padding: 5px 8px !important;
+    height: 32px;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #1e293b;
+}
+
+/* جدول لوحة التحكم - الهيد الأزرق والخط Bold */
+.gl-dash-table {
+    table-layout: fixed;
+    width: 100%;
+    font-weight: 700;
+    font-size: 12px;
+}
+.gl-dash-table thead th {
+    background: #1d4ed8 !important;
+    color: #ffffff !important;
+    border: 1px solid #1e40af !important;
+    padding: 7px 4px;
+    font-weight: 700;
+    font-size: 12px;
+}
+.gl-dash-table tbody td {
+    border: 1px solid #94a3b8 !important;
+    padding: 4px;
+    vertical-align: middle;
+    word-wrap: break-word;
+    font-weight: 700;
+}
+
+/* الجدول الداخلي للبنود */
+.gl-inner-items-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: 11px;
+    background: transparent !important;
+}
+.gl-inner-items-table th {
+    background: #dbeafe !important;
+    color: #1e3a8a !important;
+    border: 1px solid #93c5fd !important;
+    padding: 3px 2px !important;
+    font-weight: 700;
+}
+.gl-inner-items-table td {
+    border: 1px solid #cbd5e1 !important;
+    padding: 3px 2px !important;
+    background: transparent !important;
+    font-weight: 700;
+}
+.gl-inner-items-table input {
+    width: 42px !important;
+    padding: 2px !important;
+    font-size: 11px;
+    font-weight: 700;
+    background: #ffffff;
+    border: 1px solid #94a3b8;
+    border-radius: 3px;
+    text-align: center;
+}
+
+/* ألوان الصفوف حسب الحالة */
+.gl-row-done {
+    background-color: #dcfce7 !important; /* أخضر فاتح للـ Done */
+}
+.gl-row-open {
+    background-color: #fef9c3 !important; /* أصفر فاتح للـ Open بدون وارد */
+}
+.gl-row-partial {
+    background-color: #fee2e2 !important; /* أحمر فاتح للـ Open مع استلام كمية في الوارد */
+    .item-thickness {
+    color: #dc2626 !important;
+    font-weight: bold !important;
+}
+}
+#glPurchaseSerial {
+    width: 90px !important;
+    min-width: 90px !important;
+    padding: 2px 4px !important;
+    text-align: center !important;
+}
+/* ظبط الجدول الداخلي للبنود والكميات */
+.gl-items-table,
+table table {
+    table-layout: auto !important;
+    width: 100% !important;
+}
+
+.gl-items-table th,
+.gl-items-table td,
+table table th,
+table table td {
+    width: auto !important;
+    white-space: nowrap !important;
+    padding: 6px 8px !important;
+}
+
+/* السماح لعمود البيان بس إنه ياخد مساحة مريحة */
+.gl-items-table th:first-child,
+.gl-items-table td:first-child,
+table table th:first-child,
+table table td:first-child {
+    white-space: normal !important;
+    min-width: 140px !important;
+}

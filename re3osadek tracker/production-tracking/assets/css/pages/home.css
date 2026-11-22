@@ -1,0 +1,59 @@
+/* ========================================
+   🏠 REAOSADEK - Home Page CSS (خاص بصفحة الهوم وحدها)
+   ======================================== */
+
+.home-page {
+  padding: 25px;
+  direction: ltr;
+  font-family: Tahoma, Arial, sans-serif;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.home-welcome-box {
+  background: linear-gradient(135deg, #0b6ed3 0%, #095bb0 100%);
+  color: white;
+  padding: 20px 25px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.home-welcome-box h2 {
+  margin: 0 0 5px 0;
+  font-size: 22px;
+}
+
+.home-search-box {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #dee2e6;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.home-search-box input[type="text"] {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.home-search-box button {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.home-search-box button:hover {
+  background: #218838;
+}

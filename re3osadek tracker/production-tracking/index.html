@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="REAOSADEK - Production Tracking System">
+  <meta name="theme-color" content="#2563eb">
+  <title>REAOSADEK - Production Tracking</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%232563eb'/%3E%3Ctext x='50' y='65' font-size='50' text-anchor='middle' fill='white' font-weight='bold' font-family='Arial'%3ER%3C/text%3E%3C/svg%3E">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- مكتبة تحويل الفواتير إلى PDF (قسم الزجاج) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/utilities.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages/kanban.css">
+  <link rel="stylesheet" href="assets/css/pages/dashboard.css">
+  <link rel="stylesheet" href="assets/css/pages/chat.css">
+  <link rel="stylesheet" href="assets/css/pages/reports.css">
+  <link rel="stylesheet" href="assets/css/pages/shortages.css">
+  <link rel="stylesheet" href="assets/css/pages/customers.css">
+  <link rel="stylesheet" href="assets/css/pages/production-flow.css">
+    <link rel="stylesheet" href="assets/css/pages/glass.css">
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       🔐 LOGIN SCREEN
+       ═══════════════════════════════════════════════════════════ -->
+  <div id="loginScreen" class="login-layout">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="login-logo-icon">R</div>
+        <h1 class="login-title">REAOSADEK®</h1>
+        <p class="login-subtitle">Production Tracking System</p>
+      </div>
+
+      <form id="loginForm" class="flex flex-col gap-md">
+        <div class="form-group">
+          <label class="form-label required" for="loginUsername">اسم المستخدم</label>
+          <input type="text" id="loginUsername" class="form-input" placeholder="أدخل اسم المستخدم"
+            autocomplete="username" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label required" for="loginPassword">كلمة المرور</label>
+          <input type="password" id="loginPassword" class="form-input" placeholder="أدخل كلمة المرور"
+            autocomplete="current-password" required>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <label class="flex items-center gap-xs cursor-pointer">
+            <input type="checkbox" id="rememberMe">
+            <span class="text-sm">تذكرني</span>
+          </label>
+          <a href="#" class="text-sm text-primary">نسيت كلمة المرور؟</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg w-full">
+          <i class="fas fa-sign-in-alt"></i>
+          <span>تسجيل الدخول</span>
+        </button>
+
+        <div id="loginError" class="alert alert-danger d-none">
+          <span class="alert-icon">❌</span>
+          <div class="alert-content">
+            <div class="alert-description">اسم المستخدم أو كلمة المرور غير صحيحة</div>
+          </div>
+        </div>
+      </form>
+
+      <div class="text-center mt-lg">
+        <small class="text-muted">REAOSADEK® Production Tracking v2.0</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       🏗️ MAIN APPLICATION
+       ═══════════════════════════════════════════════════════════ -->
+  <div id="appLayout" class="app-layout d-none">
+
+    <!-- ═══════════ SIDEBAR ═══════════ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="#" class="sidebar-logo" data-page="production-flow">
+          <div class="sidebar-logo-icon">R</div>
+          <div class="sidebar-logo-text">
+            <span class="sidebar-logo-title">REAOSADEK</span>
+            <span class="sidebar-logo-subtitle">Production System</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-body scrollbar-thin">
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">الرئيسية</div>
+          <nav class="sidebar-menu">
+            <a href="#" class="sidebar-item active" data-page="home">
+              <span class="sidebar-item-icon">🏠</span>
+              <span class="sidebar-item-text">Home</span>
+            </a>
+            <a href="#" class="sidebar-item" data-page="production-flow">
+              <span class="sidebar-item-icon">🏭</span>
+              <span class="sidebar-item-text">Production Flow</span>
+            </a>
+            <a href="#" class="sidebar-item" data-page="overall-production">
+              <span class="sidebar-item-icon">📊</span>
+              <span class="sidebar-item-text">Overall Production</span>
+            </a>
+            <a href="#" class="sidebar-item" data-page="customers">
+              <span class="sidebar-item-icon">🏭</span>
+              <span class="sidebar-item-text">My Customers</span>
+            </a>
+            
+            <a href="#" class="sidebar-item" data-page="kanban">
+              <span class="sidebar-item-icon">📋</span>
+              <span class="sidebar-item-text">Kanban Board</span>
+            </a>
+            <a href="#" class="sidebar-item" data-page="shortages">
+              <span class="sidebar-item-icon">🔴</span>
+              <span class="sidebar-item-text">النواقص</span>
+              <span class="sidebar-item-badge" id="shortagesBadge">0</span>
+            </a>
+            <a href="#" class="sidebar-item" data-page="chat">
+              <span class="sidebar-item-icon">💬</span>
+              <span class="sidebar-item-text">Production Chat</span>
+              <span class="sidebar-item-badge" id="chatBadge">0</span>
+            </a>
+            <a href="#" class="home-action-btn" data-page="glass">
+              <div class="home-action-icon">💎</div>
+              <div class="home-action-label">glass</div>
+            </a>
+          </nav>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">الإنتاج</div>
+          <nav class="sidebar-menu">
+            <a href="#" class="sidebar-item has-submenu" data-submenu="production">
+              <span class="sidebar-item-icon">⚙️</span>
+              <span class="sidebar-item-text">Production</span>
+            </a>
+            <div class="sidebar-submenu" id="submenu-production">
+              <a href="#" class="sidebar-item" data-page="cutting"><span class="sidebar-item-icon">✂️</span><span
+                  class="sidebar-item-text">Cutting</span></a>
+              <a href="#" class="sidebar-item" data-page="edge"><span class="sidebar-item-icon">📏</span><span
+                  class="sidebar-item-text">Edge</span></a>
+              <a href="#" class="sidebar-item" data-page="cnc"><span class="sidebar-item-icon">⚙️</span><span
+                  class="sidebar-item-text">CNC</span></a>
+              <a href="#" class="sidebar-item" data-page="pressing"><span class="sidebar-item-icon">🔩</span><span
+                  class="sidebar-item-text">Pressing</span></a>
+              <a href="#" class="sidebar-item" data-page="assembly"><span class="sidebar-item-icon">🔨</span><span
+                  class="sidebar-item-text">Assembly</span></a>
+              <a href="#" class="sidebar-item" data-page="final-qc"><span class="sidebar-item-icon">✅</span><span
+                  class="sidebar-item-text">Final Quality</span></a>
+            </div>
+          </nav>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">التقارير</div>
+          <nav class="sidebar-menu">
+            <a href="#" class="sidebar-item" data-page="stages-dashboard"><span class="sidebar-item-icon">📈</span><span
+                class="sidebar-item-text">Stages Dashboard</span></a>
+            <a href="#" class="sidebar-item" data-page="stage-durations"><span class="sidebar-item-icon">⏱️</span><span
+                class="sidebar-item-text">Stage Durations</span></a>
+            <a href="#" class="sidebar-item" data-page="ready-projects"><span class="sidebar-item-icon">✅</span><span
+                class="sidebar-item-text">Ready Projects</span></a>
+            <a href="#" class="sidebar-item" data-page="projects"><span class="sidebar-item-icon">📁</span><span
+                class="sidebar-item-text">Projects</span></a>
+            <a href="#" class="sidebar-item" data-page="reports"><span class="sidebar-item-icon">📊</span><span
+                class="sidebar-item-text">Reports</span></a>
+          </nav>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="#" class="sidebar-item" id="languageToggle">
+          <span class="sidebar-item-icon">🌐</span>
+          <span class="sidebar-item-text">English / العربية</span>
+        </a>
+        <a href="#" class="sidebar-item" id="logoutBtn">
+          <span class="sidebar-item-icon">🚪</span>
+          <span class="sidebar-item-text">Logout</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ═══════════ HEADER ═══════════ -->
+    <header class="header">
+      <div class="header-left">
+        <button class="sidebar-toggle" id="sidebarToggle" title="طي القائمة">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div>
+          <h1 class="header-title" id="pageTitle">🏠 Production Flow</h1>
+          <p class="header-subtitle" id="pageSubtitle">نظام تدفق الإنتاج</p>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="d-none md:d-flex">
+          <input type="search" class="form-input" placeholder="🔎 بحث سريع..." style="width: 200px;">
+        </div>
+        <button class="header-action" id="notificationsBtn" title="الإشعارات">
+          <i class="fas fa-bell"></i>
+          <span class="badge-notification" id="notificationsCount">0</span>
+        </button>
+        <button class="header-action" id="themeToggle" title="الوضع الليلي">
+          <i class="fas fa-moon"></i>
+        </button>
+        <div class="user-profile" id="userProfileBtn">
+          <div class="avatar" id="userAvatar">ر</div>
+          <div class="user-info">
+            <span class="user-name" id="userName">reao</span>
+            <span class="user-role" id="userRole">مدير</span>
+          </div>
+          <i class="fas fa-chevron-down text-xs text-muted"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- ═══════════ MAIN CONTENT ═══════════ -->
+    <main class="main-content scrollbar-thin">
+      <!-- ═══════════════════════════════════════════════════════════
+     🏠 PAGE: HOME (الرئيسية والاستعلام)
+     ═══════════════════════════════════════════════════════════ -->
+      <div class="page-section" data-page-content="home">
+        <div class="home-page">
+
+          <!-- Welcome Section -->
+          <div class="home-welcome">
+            <h1 class="home-title">أهلاً بك، <span id="homeUserName">مستخدم</span> 👋</h1>
+            <p class="home-subtitle">نظام REAOSADEK لتتبع الإنتاج - ابحث بكود العميل للاستعلام عن بياناته.</p>
+          </div>
+
+          <!-- Quick Search -->
+          <div class="home-search-section">
+            <h2 class="home-section-title">🔎 بحث سريع</h2>
+            <div class="home-search-box">
+              <div class="home-search-field">
+                <label>كود العميل</label>
+                <div class="home-search-input-wrapper">
+                  <input type="text" id="homeClientCode" placeholder="أدخل كود العميل..." />
+                  <button id="homeBtnSearch" class="home-search-btn">🔎 بحث</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="home-stats-section">
+            <h2 class="home-section-title">📊 إحصائيات سريعة</h2>
+            <div class="home-stats-grid">
+              <div class="home-stat-card">
+                <div class="home-stat-icon">📦</div>
+                <div class="home-stat-value" id="homeTotalClients">0</div>
+                <div class="home-stat-label">إجمالي العملاء</div>
+              </div>
+              <div class="home-stat-card">
+                <div class="home-stat-icon">⚙️</div>
+                <div class="home-stat-value" id="homeInProduction">0</div>
+                <div class="home-stat-label">قيد الإنتاج</div>
+              </div>
+              <div class="home-stat-card">
+                <div class="home-stat-icon">✅</div>
+                <div class="home-stat-value" id="homeCompleted">0</div>
+                <div class="home-stat-label">مكتمل</div>
+              </div>
+              <div class="home-stat-card">
+                <div class="home-stat-icon">🔴</div>
+                <div class="home-stat-value" id="homeShortages">0</div>
+                <div class="home-stat-label">نواقص</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <!-- استبدل أزرار home-actions-grid بهذا -->
+          <div class="home-actions-grid">
+            <a href="#" class="home-action-btn" data-page="production-flow">
+              <div class="home-action-icon">🏭</div>
+              <div class="home-action-label">Production Flow</div>
+            </a>
+            <a href="#" class="home-action-btn" data-page="customers">
+              <div class="home-action-icon">🏭</div>
+              <div class="home-action-label">My Customers</div>
+            </a>
+            <a href="#" class="home-action-btn" data-page="kanban">
+              <div class="home-action-icon">📋</div>
+              <div class="home-action-label">Kanban Board</div>
+            </a>
+            <a href="#" class="home-action-btn" data-page="shortages">
+              <div class="home-action-icon">🔴</div>
+              <div class="home-action-label">النواقص</div>
+            </a>
+          </div> <!-- نهاية أزرار الإجراءات السريعة -->
+
+        </div> <!-- ✅ إغلاق ديف home-page -->
+      </div> <!-- ✅ إغلاق ديف page-section الخاص بـ home -->
+
+          <!-- ═══════════════════════════════════════════════════════════
+           🏭 PAGE: PRODUCTION FLOW 
+           ═══════════════════════════════════════════════════════════ -->
+          <div class="page-section d-none" data-page-content="production-flow">
+            <div class="pf-page">
+              <div class="pf-stats-row">
+                <div class="pf-stat-box">
+                  <div class="pf-stat-num" id="pfTotal">0</div>
+                  <div class="pf-stat-label">Total Clients</div>
+                </div>
+                <div class="pf-stat-box pf-in-prod">
+                  <div class="pf-stat-num" id="pfInProd">0</div>
+                  <div class="pf-stat-label">In Production</div>
+                </div>
+                <div class="pf-stat-box pf-completed">
+                  <div class="pf-stat-num" id="pfCompleted">0</div>
+                  <div class="pf-stat-label">Completed</div>
+                </div>
+              </div>
+
+              <div class="pf-stage-row">
+                <div class="pf-stage-box" data-stage="cutting">
+                  <div class="pf-stage-title">Cutting</div>
+                  <div class="pf-stage-num" id="pfCutting">0</div>
+                </div>
+                <div class="pf-stage-box" data-stage="edge">
+                  <div class="pf-stage-title">Edge</div>
+                  <div class="pf-stage-num" id="pfEdge">0</div>
+                </div>
+                <div class="pf-stage-box" data-stage="cnc">
+                  <div class="pf-stage-title">CNC</div>
+                  <div class="pf-stage-num" id="pfCnc">0</div>
+                </div>
+                <div class="pf-stage-box" data-stage="pressing">
+                  <div class="pf-stage-title">Pressing</div>
+                  <div class="pf-stage-num" id="pfPressing">0</div>
+                </div>
+                <div class="pf-stage-box" data-stage="assembly">
+                  <div class="pf-stage-title">Assembly</div>
+                  <div class="pf-stage-num" id="pfAssembly">0</div>
+                </div>
+                <div class="pf-stage-box" data-stage="final-qc">
+                  <div class="pf-stage-title">Final Quality</div>
+                  <div class="pf-stage-num" id="pfFinalQc">0</div>
+                </div>
+                <div class="pf-stage-box" data-stage="done">
+                  <div class="pf-stage-title">Done</div>
+                  <div class="pf-stage-num" id="pfDone">0</div>
+                </div>
+              </div>
+
+              <div class="pf-filter-row">
+                <button class="pf-btn active" data-filter="all">All</button>
+                <button class="pf-btn" data-filter="cutting">cutting <span id="fCutting">0</span></button>
+                <button class="pf-btn" data-filter="edge">edge <span id="fEdge">0</span></button>
+                <button class="pf-btn" data-filter="cnc">cnc <span id="fCnc">0</span></button>
+                <button class="pf-btn" data-filter="pressing">pressing <span id="fPressing">0</span></button>
+                <button class="pf-btn" data-filter="assembly">assembly <span id="fAssembly">0</span></button>
+                <button class="pf-btn" data-filter="final-qc">finalQC <span id="fFinalQc">0</span></button>
+                <button class="pf-btn" data-filter="done">done <span id="fDone">0</span></button>
+              </div>
+
+              <div class="pf-table-box">
+                <table class="pf-table">
+                  <thead>
+                    <tr>
+                      <th>Client Code</th>
+                      <th>Client Name</th>
+                      <th>Project Name</th>
+                      <th>Cutting</th>
+                      <th>Edge</th>
+                      <th>CNC</th>
+                      <th>Pressing</th>
+                      <th>Assembly</th>
+                      <th>Final Quality</th>
+                      <th>Progress</th>
+                      <th>Supply</th>
+                      <th>Shipping</th>
+                    </tr>
+                  </thead>
+                  <tbody id="pfBody">
+                    <tr>
+                      <td colspan="12" style="text-align:center;padding:20px;">جاري التحميل...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════════════════════════════════════════════════
+           📊 PAGE: OVERALL PRODUCTION 
+           ═══════════════════════════════════════════════════════════ -->
+          <div class="page-section d-none" data-page-content="overall-production">
+            <div class="dashboard-page">
+              <div class="dashboard-hero">
+                <div class="dashboard-hero-content">
+                  <h1 class="dashboard-hero-title">📊 Overall Production Progress</h1>
+                  <p class="dashboard-hero-subtitle">نظرة عامة على حالة الإنتاج اليوم</p>
+                  <div class="dashboard-hero-stats">
+                    <div class="dashboard-hero-stat">
+                      <span class="dashboard-hero-stat-value" id="statTotalClients">0</span>
+                      <span class="dashboard-hero-stat-label">Total Clients</span>
+                    </div>
+                    <div class="dashboard-hero-stat">
+                      <span class="dashboard-hero-stat-value" id="statInProduction">0</span>
+                      <span class="dashboard-hero-stat-label">In Production</span>
+                    </div>
+                    <div class="dashboard-hero-stat">
+                      <span class="dashboard-hero-stat-value" id="statCompleted">0</span>
+                      <span class="dashboard-hero-stat-label">Completed</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dashboard-stats-grid">
+                <div class="dashboard-stat-card stat-total">
+                  <div class="dashboard-stat-header">
+                    <div class="dashboard-stat-icon">📦</div>
+                    <span class="dashboard-stat-trend up">↑ 12%</span>
+                  </div>
+                  <div class="dashboard-stat-value">124</div>
+                  <div class="dashboard-stat-label">Total Clients</div>
+                  <div class="dashboard-stat-footer"><span>📈</span><span>+14 هذا الشهر</span></div>
+                </div>
+                <div class="dashboard-stat-card stat-in-production">
+                  <div class="dashboard-stat-header">
+                    <div class="dashboard-stat-icon">⚙️</div>
+                    <span class="dashboard-stat-trend up">↑ 8%</span>
+                  </div>
+                  <div class="dashboard-stat-value">87</div>
+                  <div class="dashboard-stat-label">In Production</div>
+                  <div class="dashboard-stat-footer"><span>⏱️</span><span>متوسط 5 أيام</span></div>
+                </div>
+                <div class="dashboard-stat-card stat-completed">
+                  <div class="dashboard-stat-header">
+                    <div class="dashboard-stat-icon">✅</div>
+                    <span class="dashboard-stat-trend up">↑ 23%</span>
+                  </div>
+                  <div class="dashboard-stat-value">37</div>
+                  <div class="dashboard-stat-label">Completed</div>
+                  <div class="dashboard-stat-footer"><span>🎯</span><span>معدل النجاح 95%</span></div>
+                </div>
+                <div class="dashboard-stat-card stat-shortages">
+                  <div class="dashboard-stat-header">
+                    <div class="dashboard-stat-icon">🔴</div>
+                    <span class="dashboard-stat-trend down">↓ 5%</span>
+                  </div>
+                  <div class="dashboard-stat-value">5</div>
+                  <div class="dashboard-stat-label">Shortages</div>
+                  <div class="dashboard-stat-footer"><span>⚠️</span><span>يحتاج متابعة</span></div>
+                </div>
+              </div>
+
+              <div class="stages-section">
+                <div class="stages-section-header">
+                  <h2 class="stages-section-title">🏭 مراحل الإنتاج</h2>
+                  <button class="btn btn-sm btn-outline-primary">عرض التفاصيل</button>
+                </div>
+                <div class="stages-grid">
+                  <div class="stage-card stage-cutting">
+                    <div class="stage-card-icon">✂️</div>
+                    <div class="stage-card-name">Cutting</div>
+                    <div class="stage-card-count">12</div>
+                    <div class="stage-card-label">بند</div>
+                  </div>
+                  <div class="stage-card stage-edge">
+                    <div class="stage-card-icon">📏</div>
+                    <div class="stage-card-name">Edge</div>
+                    <div class="stage-card-count">8</div>
+                    <div class="stage-card-label">بند</div>
+                  </div>
+                  <div class="stage-card stage-cnc">
+                    <div class="stage-card-icon">⚙️</div>
+                    <div class="stage-card-name">CNC</div>
+                    <div class="stage-card-count">15</div>
+                    <div class="stage-card-label">بند</div>
+                  </div>
+                  <div class="stage-card stage-pressing">
+                    <div class="stage-card-icon">🔩</div>
+                    <div class="stage-card-name">Pressing</div>
+                    <div class="stage-card-count">6</div>
+                    <div class="stage-card-label">بند</div>
+                  </div>
+                  <div class="stage-card stage-assembly">
+                    <div class="stage-card-icon">🔨</div>
+                    <div class="stage-card-name">Assembly</div>
+                    <div class="stage-card-count">10</div>
+                    <div class="stage-card-label">بند</div>
+                  </div>
+                  <div class="stage-card stage-final-qc">
+                    <div class="stage-card-icon">✅</div>
+                    <div class="stage-card-name">Final QC</div>
+                    <div class="stage-card-count">4</div>
+                    <div class="stage-card-label">بند</div>
+                  </div>
+                  <div class="stage-card stage-done">
+                    <div class="stage-card-icon">🎉</div>
+                    <div class="stage-card-name">Done</div>
+                    <div class="stage-card-count">37</div>
+                    <div class="stage-card-label">مكتمل</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="production-table-wrapper">
+                <div class="production-table-header">
+                  <h3 class="production-table-title">📋 Production Flow</h3>
+                  <div class="production-table-actions">
+                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-filter"></i> Filter</button>
+                    <button class="btn btn-sm btn-primary"><i class="fas fa-sync"></i> Refresh</button>
+                  </div>
+                </div>
+                <div class="production-table-container">
+                  <table class="production-table">
+                    <thead>
+                      <tr>
+                        <th>Client Code</th>
+                        <th>Client Name</th>
+                        <th>Project Name</th>
+                        <th>Cutting</th>
+                        <th>Edge</th>
+                        <th>CNC</th>
+                        <th>Pressing</th>
+                        <th>Assembly</th>
+                        <th>Final QC</th>
+                        <th>Progress</th>
+                        <th>Supply</th>
+                        <th>Shipping</th>
+                      </tr>
+                    </thead>
+                    <tbody id="productionFlowBody">
+                      <tr>
+                        <td colspan="12" class="text-center p-lg text-muted">
+                          <div class="spinner"></div>
+                          <div class="mt-sm">جاري تحميل البيانات...</div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="completed-section">
+                <div class="completed-section-header">
+                  <h3 class="completed-section-title">✅ Completed Clients <span
+                      class="completed-section-count">37</span></h3>
+                  <div class="completed-filters">
+                    <div class="completed-filter-group"><label class="completed-filter-label">From:</label><input
+                        type="date" class="completed-filter-input"></div>
+                    <div class="completed-filter-group"><label class="completed-filter-label">To:</label><input
+                        type="date" class="completed-filter-input"></div>
+                    <button class="btn btn-sm btn-primary">Apply</button>
+                    <button class="btn btn-sm btn-ghost">Reset</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      <!-- ═══════════════════════════════════════════════════════════
+           🏭 PAGE: CUSTOMERS 
+           ═══════════════════════════════════════════════════════════ -->
+          <div class="page-section d-none" data-page-content="customers">
+            <div class="header-logo" style="margin-bottom: 20px;">
+              <bdo dir="ltr"><span class="logo-K" style="color:#0d6efd;font-weight:bold;font-size:24px;">R</span>EAOSADEK<sup>®</sup></bdo>
+            </div>
+            
+            <div id="loading" style="display:none;text-align:center;margin:20px 0;"><div class="spinner"></div></div>
+
+            <!-- الصف الأول: الحقول المدمجة + أزرار الحفظ -->
+            <div class="pt-row-1">
+              <label class="pt-field">Client Code
+                <!-- تم إزالة زر البحث لتصغير الحقل، وسيعمل بالضغط على Enter -->
+                <input type="text" id="clientCode" placeholder="اكتب الكود واضغط Enter" />
+              </label>
+              <label class="pt-field">Client Name
+                <input type="text" id="clientName" placeholder="Client Name" />
+              </label>
+              <label class="pt-field">Project Name
+                <input type="text" id="projectName" placeholder="Project Name" />
+              </label>
+              <label class="pt-field">Add New Technician
+                <div class="pt-field-inline">
+                  <input type="text" id="newTech" placeholder="Add New Technician" style="width: 145px !important;" />
+                  <button type="button" id="btnAddTech" class="pt-btn-icon" title="Add Technician">+</button>
+                </div>
+              </label>
+              
+              <!-- أزرار الحفظ والتحديث بجوار الفنيين بألوان مميزة -->
+              <div style="display: flex; gap: 10px; margin-bottom: 2px;">
+                <button id="btnSave" class="pt-btn pt-btn-save"><i class="fas fa-save"></i> Save</button>
+                <button id="btnRefresh" class="pt-btn pt-btn-refresh"><i class="fas fa-sync"></i> Refresh</button>
+              </div>
+            </div>
+
+            <!-- الصف الثاني: الخامات -->
+            <div class="pt-row-2">
+              <div class="material-group"><span>Internal:</span><input type="text" id="internalMaterial" placeholder="Internal Material" /></div>
+              <div class="material-group"><span>Internal 2:</span><input type="text" id="internalMaterial2" placeholder="Internal Material 2" /></div>
+              <div class="material-group"><span>External:</span><input type="text" id="externalMaterial" placeholder="External Material" /></div>
+              <div class="material-group"><span>External 2:</span><input type="text" id="externalMaterial2" placeholder="External Material 2" /></div>
+
+              <label class="checkbox-card"><input type="checkbox" id="chkStorage" /> Storage</label>
+              <label class="checkbox-card"><input type="checkbox" id="chkSupply" /> Supply</label>
+
+              <div class="material-group" style="margin-inline-start:auto;">
+                <span>Item Count:</span>
+                <input type="number" id="itemCount" min="0" value="0" style="width:70px; height:34px; text-align:center; font-weight:bold;" />
+              </div>
+            </div>
+
+            <!-- قسم الـ Export والـ Import بألوان جذابة ومناسبة -->
+            <div class="pt-export-box">
+              <label><i class="fas fa-file-export"></i> Export:</label>
+              <select id="exportClient">
+                <option value="">All Clients</option>
+              </select>
+              <select id="exportStage">
+                <option value="">All Stages</option>
+                <option value="cutting">Cutting</option>
+                <option value="edge">Edge</option>
+                <option value="cnc">CNC</option>
+                <option value="pressing">Pressing</option>
+                <option value="assembly">Assembly</option>
+                <option value="final-quality">Final QC</option>
+              </select>
+              <button onclick="exportFiltered()" class="pt-btn pt-btn-export"><i class="fas fa-file-excel"></i> Export Excel</button>
+              
+              <div style="width: 2px; height: 30px; background: rgba(255,255,255,0.3); margin: 0 10px;"></div>
+              
+              <button onclick="toggleImportBox()" class="pt-btn pt-btn-import"><i class="fas fa-file-import"></i> Import</button>
+              <button onclick="createSampleExcel()" class="pt-btn pt-btn-outline"><i class="fas fa-download"></i> Sample File</button>
+            </div>
+
+            <!-- شريط الحالة -->
+            <div id="statusBar" class="pt-status-bar">No Data</div>
+            <div id="clientProgressLine"></div>
+
+            <!-- جدول المراحل -->
+            <form id="prodForm">
+              <div id="stagesContainer"></div>
+            </form>
+          </div>
+          <!-- ==========================================
+           🪟 PAGE: GLASS (الزجاج) 
+           ========================================== -->
+          <div class="page-section d-none" data-page-content="glass">
+            <div class="glass-container">
+                <!-- شريط التنقل بين الصفحات الفرعية -->
+                <div class="glass-header-nav">
+                    <h2>نظام إدارة أوامر التوريد - الزجاج</h2>
+                    <div class="glass-tabs">
+                        <button onclick="window.glassApp.switchTab('orderForm')" id="btnTabForm" class="active">أمر التوريد</button>
+                        <button onclick="window.glassApp.switchTab('dashboard')" id="btnTabDash">لوحة التحكم</button>
+                        <button onclick="window.glassApp.switchTab('invoices')" id="btnTabInv">استلام الفواتير</button>
+                    </div>
+                </div>
+                           <!-- 1. صفحة أمر الطلب -->
+<div id="tabOrderForm" class="glass-tab-content">
+    <div class="glass-form-header pdf-hide">
+        <div style="display: flex; gap: 10px;">
+            <button onclick="window.glassApp.saveOrder(true)" class="gl-btn gl-btn-primary"><i class="fas fa-file-pdf"></i> حفظ و PDF</button>
+            <button onclick="window.glassApp.saveOrder(false)" class="gl-btn gl-btn-success"><i class="fas fa-save"></i> حفظ فقط</button>
+            <button onclick="window.glassApp.previewPdf()" class="gl-btn" style="background:#6366f1; color:white;"><i class="fas fa-eye"></i> معاينة</button>
+            <button onclick="window.glassApp.newOrder()" class="gl-btn gl-btn-danger"><i class="fas fa-plus"></i> فاتورة جديدة</button>
+        </div>
+    </div>
+
+    <!-- منطقة المعاينة والطباعة (PDF) -->
+    <div id="pdfContent" class="glass-pdf-area" style="background:#fff; padding: 20px;">
+        
+        <!-- رأس الفاتورة (Header) -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; border-bottom: 2px solid #3b82f6; padding-bottom: 15px;">
+            <!-- مساحة فارغة لضبط التوازن -->
+            <div style="width: 25%;"></div>
+            
+            <!-- عنوان الفاتورة في المنتصف -->
+            <div class="glass-pdf-title" style="text-align: center; margin: 0; width: 50%;">
+                <h2 style="margin: 0; color: #1e3a8a; font-size: 24px; font-weight: 800;">أمر شراء زجاج</h2>
+                <div style="display:flex; justify-content:center; align-items:center; gap:5px; margin-top: 5px; font-size: 18px;">
+                    رقم ( <input type="number" id="glPurchaseSerial" class="pdf-input-inline" style="width: 60px; text-align: center; border: none; border-bottom: 2px dashed #cbd5e1; font-weight: bold; background: transparent; color: #ef4444; outline: none; -moz-appearance: textfield;"> )
+                </div>
+            </div>
+            
+            <!-- اسم الشركة على اليسار -->
+            <div class="glass-company-info" style="width: 25%; text-align: left;">
+                <strong style="font-size: 18px; color: #1e3a8a;">شركة كيتشينو</strong><br>
+                <small style="color: #64748b; font-weight: 600;">للمطابخ العصرية</small>
+            </div>
+        </div>
+        
+        <!-- حقول بيانات العميل (مصغرة وبجوار بعضها) -->
+        <div style="display: flex; flex-wrap: nowrap; gap: 6px; margin-bottom: 20px; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <div class="gl-input-group-inline" style="flex: 0.9; min-width: 90px;">
+                <label>تاريخ الطلب</label>
+                <input type="text" id="glOrderDate" class="pdf-input-inline" readonly>
+            </div>
+            <div class="gl-input-group-inline" style="flex: 0.8; min-width: 80px;">
+                <label>كود الإنتاج</label>
+                <input type="text" id="glProdCode" class="pdf-input-inline" placeholder="كود الإنتاج">
+            </div>
+            <div class="gl-input-group-inline" style="flex: 0.8; min-width: 80px;">
+                <label>كود العميل</label>
+                <input type="text" id="glClientCode" class="pdf-input-inline" placeholder="كود العميل">
+            </div>
+            <!-- تكبير خلية اسم العميل ومحاذاة النص لليمين لضمان ظهور بداية الاسم دائماً -->
+            <div class="gl-input-group-inline" style="flex: 2.6; min-width: 240px;">
+                <label>اسم العميل</label>
+                <input type="text" id="glClientName" class="pdf-input-inline" placeholder="اسم العميل" style="text-align: right; direction: rtl; padding-right: 6px;">
+            </div>
+            <!-- تصغير خلية النوع -->
+            <div class="gl-input-group-inline" style="flex: 0.7; min-width: 75px;">
+                <label>النوع</label>
+                <input type="text" id="glOrderType" class="pdf-input-inline" placeholder="النوع">
+            </div>
+            <div class="gl-input-group-inline" style="flex: 1.1; min-width: 110px;">
+                <label>اسم المورد</label>
+                <div style="display:flex; gap:5px; width: 100%;">
+                    <select id="glSupplierSelect" class="pdf-input-inline" style="width: 100%;"></select>
+                    <button onclick="window.glassApp.addNewSupplier()" class="gl-btn-sm gl-btn-success pdf-hide" title="إضافة مورد">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الجدول مع مقاسات ثابتة -->
+        <table class="glass-table mt-3" style="table-layout: fixed; width: 100%;">
+            <thead>
+                <tr>
+                    <th style="width: 4%;">م</th>
+                    <th style="width: 25%;">البيان <button onclick="window.glassApp.addNewGlassType()" class="gl-btn-sm gl-btn-success pdf-hide" style="padding:2px 6px;" title="إضافة صنف">+</button></th>
+                    <th style="width: 8%;">الطول سم</th>
+                    <th style="width: 8%;">العرض سم</th>
+                    <th style="width: 8%;">السمك مم</th>
+                    <th style="width: 7%;">الوحدة</th>
+                    <th style="width: 8%;">مطلوب</th>
+                    <th style="width: 22%;">ملاحظات</th>
+                    <th style="width: 10%;">الإجمالي</th>
+                    <th style="width: 4%;" class="pdf-hide-col">حذف</th>
+                </tr>
+            </thead>
+            <tbody id="glItemsTableBody"></tbody>
+            <!-- صف إجمالي أمر الشراء -->
+            <tfoot id="glTableFooter">
+                <tr style="background-color: #f1f5f9; font-weight: bold;">
+                    <td colspan="8" style="text-align: left; padding-right: 15px;">إجمالي أمر الشراء</td>
+                    <td><input type="text" id="glGrandTotal" class="pdf-input-inline" style="width:100%; text-align:center; font-weight:bold; color:#1e3a8a; background:transparent;" value="" readonly></td>
+                    <td class="pdf-hide-col"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <button onclick="window.glassApp.addRow()" class="gl-btn-sm gl-btn-primary mt-2 pdf-hide">+ إضافة سطر للبند</button>
+    </div>
+</div>
+               <!-- 2. لوحة التحكم -->
+                <div id="tabDashboard" class="glass-tab-content d-none">
+                    <div class="gl-dash-topbar">
+                        <h3 style="margin:0;">لوحة التحكم ومتابعة الموردين</h3>
+                        <div class="gl-export-bar">
+                            <button onclick="window.glassApp.exportDashboardPdf('all')" class="gl-exp-btn gl-exp-pdf">
+                                <i class="fas fa-file-pdf"></i> PDF (الكل)
+                            </button>
+                            <button onclick="window.glassApp.exportDashboardExcel()" class="gl-exp-btn gl-exp-excel">
+                                <i class="fas fa-file-excel"></i> Excel (الكل)
+                            </button>
+                            <button onclick="window.glassApp.exportDashboardPdf('open')" class="gl-exp-btn gl-exp-open">
+                                <i class="fas fa-file-pdf"></i> PDF (Open)
+                            </button>
+                            <button onclick="window.glassApp.exportDashboardPdf('done')" class="gl-exp-btn gl-exp-done">
+                                <i class="fas fa-file-pdf"></i> PDF (Done)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="glSupplierCounters" class="glass-counters-grid"></div>
+
+                    <div class="glass-filters gl-filters-compact">
+    <input type="text" id="glFilterNo" onkeyup="window.glassApp.filterDashboard()" placeholder="رقم الأمر...">
+    <input type="text" id="glFilterSupplier" onkeyup="window.glassApp.filterDashboard()" placeholder="اسم المورد...">
+    <input type="text" id="glFilterClient" onkeyup="window.glassApp.filterDashboard()" placeholder="اسم أو كود العميل...">
+    <select id="glFilterStatus" onchange="window.glassApp.filterDashboard()">
+        <option value="">كل الحالات</option>
+        <option value="open">Open</option>
+        <option value="done">Done</option>
+    </select>
+    <input type="date" id="glFilterDateFrom" title="من تاريخ" onchange="window.glassApp.filterDashboard()">
+    <input type="date" id="glFilterDateTo" title="إلى تاريخ" onchange="window.glassApp.filterDashboard()">
+    <button type="button" onclick="window.glassApp.resetFilters()" class="gl-btn-sm gl-btn-danger" title="مسح الفلاتر">
+    <i class="fas fa-undo"></i> مسح الفلاتر
+</button>
+</div>
+
+                    <div id="glDashboardExportArea" class="table-responsive">
+                        <table class="glass-table gl-dash-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 8%;">التاريخ</th>
+                                    <th style="width: 5%;">الأمر</th>
+                                    <th style="width: 5%;">كود العميل</th>
+                                    <th style="width: 5%;">المورد</th>
+                                    <th style="width: 13%;">العميل</th>
+                                    <th style="width: 6%;">النوع</th>
+                                    <th style="width: 40%;">البنود والكميات</th>
+                                    <th style="width: 6%;">الحالة</th>
+                                    <th style="width: 7%;">تاريخ الاستلام</th>
+                                    <th style="width: 5%;">حذف</th>
+                                </tr>
+                            </thead>
+                            <tbody id="glDashboardTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- 3. استلام الفواتير -->
+                <div id="tabInvoices" class="glass-tab-content d-none">
+                    <h3>استلام الفواتير وتسجيل القيم</h3>
+                    <div class="glass-grid-2">
+                        <div class="gl-input-group">
+                            <label>استدعاء أمر الطلب:</label>
+                            <select id="glInvoiceOrderSelect"><option value="">اختر رقم أمر التوريد</option></select>
+                        </div>
+                        <div class="gl-input-group">
+                            <label>إجمالي قيمة الفاتورة:</label>
+                            <input type="number" id="glInvoiceTotalValue" placeholder="أدخل القيمة الإجمالية">
+                        </div>
+                    </div>
+                    <div style="text-align:left; margin-top:15px;">
+                        <button onclick="window.glassApp.saveInvoiceData()" class="gl-btn gl-btn-success">حفظ الفاتورة المرتبطة</button>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <!--════════════════════════════════════════════════════════
+           📊 PAGE: KANBAN BOARD
+           ═══════════════════════════════════════════════════════════ -->
+          <div class="page-section d-none" data-page-content="kanban">
+            <div class="kanban-page">
+              <div class="kanban-summary">
+                <div class="kanban-summary-item">
+                  <div class="kanban-summary-icon">📦</div>
+                  <div class="kanban-summary-info"><span class="kanban-summary-label">Total</span><span
+                      class="kanban-summary-value" id="kanbanTotal">0</span></div>
+                </div>
+                <div class="kanban-summary-item">
+                  <div class="kanban-summary-icon">⚙️</div>
+                  <div class="kanban-summary-info"><span class="kanban-summary-label">In Progress</span><span
+                      class="kanban-summary-value" id="kanbanInProgress">0</span></div>
+                </div>
+                <div class="kanban-summary-item">
+                  <div class="kanban-summary-icon">✅</div>
+                  <div class="kanban-summary-info"><span class="kanban-summary-label">Completed</span><span
+                      class="kanban-summary-value" id="kanbanCompleted">0</span></div>
+                </div>
+              </div>
+              <div class="kanban-toolbar">
+                <div class="kanban-toolbar-left">
+                  <div class="kanban-search"><i class="fas fa-search kanban-search-icon"></i><input type="text"
+                      class="form-input" placeholder="🔎 Search..." id="kanbanSearch"></div>
+                  <button class="kanban-filter active">All</button>
+                  <button class="kanban-filter">Urgent</button>
+                  <button class="kanban-filter">Overdue</button>
+                </div>
+                <div class="kanban-toolbar-right">
+                  <div class="kanban-view-toggle">
+                    <button class="kanban-view-btn active" title="Board View"><i class="fas fa-columns"></i></button>
+                    <button class="kanban-view-btn" title="List View"><i class="fas fa-list"></i></button>
+                  </div>
+                  <button class="btn btn-primary" id="kanbanRefreshBtn"><i class="fas fa-sync"></i> Refresh</button>
+                </div>
+              </div>
+              <div class="kanban-board" id="kanbanBoard">
+                <div class="kanban-column" data-stage="cutting">
+                  <div class="kanban-column-header">
+                    <div class="kanban-column-title-wrapper">
+                      <div class="kanban-column-icon">✂️</div>
+                      <h3 class="kanban-column-title">Cutting</h3>
+                    </div><span class="kanban-column-count" data-count="cutting">0</span>
+                  </div>
+                  <div class="kanban-column-body" data-drop-zone="cutting"></div>
+                  <div class="kanban-column-footer"><button class="kanban-add-card-btn" data-add-stage="cutting"><i
+                        class="fas fa-plus"></i> Add Card</button></div>
+                </div>
+                <div class="kanban-column" data-stage="edge">
+                  <div class="kanban-column-header">
+                    <div class="kanban-column-title-wrapper">
+                      <div class="kanban-column-icon">📏</div>
+                      <h3 class="kanban-column-title">Edge</h3>
+                    </div><span class="kanban-column-count" data-count="edge">0</span>
+                  </div>
+                  <div class="kanban-column-body" data-drop-zone="edge"></div>
+                  <div class="kanban-column-footer"><button class="kanban-add-card-btn" data-add-stage="edge"><i
+                        class="fas fa-plus"></i> Add Card</button></div>
+                </div>
+                <div class="kanban-column" data-stage="cnc">
+                  <div class="kanban-column-header">
+                    <div class="kanban-column-title-wrapper">
+                      <div class="kanban-column-icon">⚙️</div>
+                      <h3 class="kanban-column-title">CNC</h3>
+                    </div><span class="kanban-column-count" data-count="cnc">0</span>
+                  </div>
+                  <div class="kanban-column-body" data-drop-zone="cnc"></div>
+                  <div class="kanban-column-footer"><button class="kanban-add-card-btn" data-add-stage="cnc"><i
+                        class="fas fa-plus"></i> Add Card</button></div>
+                </div>
+                <div class="kanban-column" data-stage="pressing">
+                  <div class="kanban-column-header">
+                    <div class="kanban-column-title-wrapper">
+                      <div class="kanban-column-icon">🔩</div>
+                      <h3 class="kanban-column-title">Pressing</h3>
+                    </div><span class="kanban-column-count" data-count="pressing">0</span>
+                  </div>
+                  <div class="kanban-column-body" data-drop-zone="pressing"></div>
+                  <div class="kanban-column-footer"><button class="kanban-add-card-btn" data-add-stage="pressing"><i
+                        class="fas fa-plus"></i> Add Card</button></div>
+                </div>
+                <div class="kanban-column" data-stage="assembly">
+                  <div class="kanban-column-header">
+                    <div class="kanban-column-title-wrapper">
+                      <div class="kanban-column-icon">🔨</div>
+                      <h3 class="kanban-column-title">Assembly</h3>
+                    </div><span class="kanban-column-count" data-count="assembly">0</span>
+                  </div>
+                  <div class="kanban-column-body" data-drop-zone="assembly"></div>
+                  <div class="kanban-column-footer"><button class="kanban-add-card-btn" data-add-stage="assembly"><i
+                        class="fas fa-plus"></i> Add Card</button></div>
+                </div>
+                <div class="kanban-column" data-stage="final-qc">
+                  <div class="kanban-column-header">
+                    <div class="kanban-column-title-wrapper">
+                      <div class="kanban-column-icon">✅</div>
+                      <h3 class="kanban-column-title">Final QC</h3>
+                    </div><span class="kanban-column-count" data-count="final-qc">0</span>
+                  </div>
+                  <div class="kanban-column-body" data-drop-zone="final-qc"></div>
+                  <div class="kanban-column-footer"><button class="kanban-add-card-btn" data-add-stage="final-qc"><i
+                        class="fas fa-plus"></i> Add Card</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════════════════════════════════════════════════
+           🔴 PAGE: SHORTAGES
+           ═══════════════════════════════════════════════════════════ -->
+          <div class="page-section d-none" data-page-content="shortages">
+            <div class="shortages-page">
+              <div class="shortages-hero">
+                <div class="shortages-hero-content">
+                  <h1 class="shortages-hero-title"><span>🔴</span><span>لوحة تحكم النواقص</span></h1>
+                  <p class="shortages-hero-subtitle">متابعة وحل جميع النواقص في مراحل الإنتاج</p>
+                  <div class="shortages-hero-stats">
+                    <div class="shortages-hero-stat">
+                      <div class="shortages-hero-stat-icon">📊</div>
+                      <div class="shortages-hero-stat-value" id="shortagesTotal">0</div>
+                      <div class="shortages-hero-stat-label">إجمالي النواقص</div>
+                    </div>
+                    <div class="shortages-hero-stat">
+                      <div class="shortages-hero-stat-icon">⏳</div>
+                      <div class="shortages-hero-stat-value" id="shortagesPending">0</div>
+                      <div class="shortages-hero-stat-label">نواقص معلقة</div>
+                    </div>
+                    <div class="shortages-hero-stat">
+                      <div class="shortages-hero-stat-icon">✅</div>
+                      <div class="shortages-hero-stat-value" id="shortagesResolved">0</div>
+                      <div class="shortages-hero-stat-label">تم الحل</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="shortages-stats-grid">
+                <div class="shortages-stat-card stat-total">
+                  <div class="shortages-stat-header">
+                    <div class="shortages-stat-icon">📊</div><span class="shortages-stat-trend up">↑ 12%</span>
+                  </div>
+                  <div class="shortages-stat-value">24</div>
+                  <div class="shortages-stat-label">إجمالي النواقص</div>
+                </div>
+                <div class="shortages-stat-card stat-pending">
+                  <div class="shortages-stat-header">
+                    <div class="shortages-stat-icon">⏳</div><span class="shortages-stat-trend up">↑ 5%</span>
+                  </div>
+                  <div class="shortages-stat-value">18</div>
+                  <div class="shortages-stat-label">نواقص معلقة</div>
+                </div>
+                <div class="shortages-stat-card stat-resolved">
+                  <div class="shortages-stat-header">
+                    <div class="shortages-stat-icon">✅</div><span class="shortages-stat-trend down">↑ 23%</span>
+                  </div>
+                  <div class="shortages-stat-value">6</div>
+                  <div class="shortages-stat-label">تم الحل</div>
+                </div>
+              </div>
+              <div class="shortages-stages-section">
+                <div class="shortages-stages-header">
+                  <h2 class="shortages-stages-title">📊 نواقص حسب المرحلة</h2><button
+                    class="btn btn-sm btn-outline-primary">عرض التفاصيل</button>
+                </div>
+                <div class="shortages-stages-grid">
+                  <div class="shortages-stage-card stage-cutting has-shortages">
+                    <div class="shortages-stage-icon">✂️</div>
+                    <div class="shortages-stage-name">Cutting</div>
+                    <div class="shortages-stage-count">5</div>
+                    <div class="shortages-stage-label">نقص</div>
+                  </div>
+                  <div class="shortages-stage-card stage-edge has-shortages">
+                    <div class="shortages-stage-icon">📏</div>
+                    <div class="shortages-stage-name">Edge</div>
+                    <div class="shortages-stage-count">3</div>
+                    <div class="shortages-stage-label">نقص</div>
+                  </div>
+                  <div class="shortages-stage-card stage-cnc">
+                    <div class="shortages-stage-icon">⚙️</div>
+                    <div class="shortages-stage-name">CNC</div>
+                    <div class="shortages-stage-count">0</div>
+                    <div class="shortages-stage-label">نقص</div>
+                  </div>
+                  <div class="shortages-stage-card stage-pressing has-shortages">
+                    <div class="shortages-stage-icon">🔩</div>
+                    <div class="shortages-stage-name">Pressing</div>
+                    <div class="shortages-stage-count">8</div>
+                    <div class="shortages-stage-label">نقص</div>
+                  </div>
+                  <div class="shortages-stage-card stage-assembly has-shortages">
+                    <div class="shortages-stage-icon">🔨</div>
+                    <div class="shortages-stage-name">Assembly</div>
+                    <div class="shortages-stage-count">4</div>
+                    <div class="shortages-stage-label">نقص</div>
+                  </div>
+                  <div class="shortages-stage-card stage-final-qc has-shortages">
+                    <div class="shortages-stage-icon">✅</div>
+                    <div class="shortages-stage-name">Final QC</div>
+                    <div class="shortages-stage-count">4</div>
+                    <div class="shortages-stage-label">نقص</div>
+                  </div>
+                </div>
+              </div>
+              <div class="shortages-table-wrapper">
+                <div class="shortages-table-header">
+                  <h3 class="shortages-table-title">🔴 جدول النواقص <span class="shortages-table-count">24</span></h3>
+                  <div class="shortages-table-actions">
+                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-filter"></i> Filter</button>
+                    <button class="btn btn-sm btn-danger" id="addShortageBtn"><i class="fas fa-plus"></i> إضافة
+                      نقص</button>
+                  </div>
+                </div>
+                <div class="shortages-table-filters">
+                  <div class="shortages-filter-group"><label class="shortages-filter-label">المرحلة:</label><select
+                      class="shortages-filter-select">
+                      <option>الكل</option>
+                      <option>Cutting</option>
+                      <option>Edge</option>
+                      <option>CNC</option>
+                      <option>Pressing</option>
+                      <option>Assembly</option>
+                      <option>Final QC</option>
+                    </select></div>
+                  <div class="shortages-filter-group"><label class="shortages-filter-label">الحالة:</label><select
+                      class="shortages-filter-select">
+                      <option>الكل</option>
+                      <option>معلق</option>
+                      <option>قيد الحل</option>
+                      <option>تم الحل</option>
+                    </select></div>
+                  <div class="shortages-filter-group"><label class="shortages-filter-label">الأولوية:</label><select
+                      class="shortages-filter-select">
+                      <option>الكل</option>
+                      <option>منخفضة</option>
+                      <option>متوسطة</option>
+                      <option>عالية</option>
+                    </select></div>
+                </div>
+                <div class="shortages-table-container">
+                  <table class="shortages-table">
+                    <thead>
+                      <tr>
+                        <th>كود العميل</th>
+                        <th>اسم العميل</th>
+                        <th>المرحلة</th>
+                        <th>التفاصيل</th>
+                        <th>الأولوية</th>
+                        <th>الحالة</th>
+                        <th>تاريخ التسجيل</th>
+                        <th>إجراءات</th>
+                      </tr>
+                    </thead>
+                    <tbody id="shortagesTableBody">
+                      <tr>
+                        <td colspan="8" class="text-center p-lg text-muted">
+                          <div class="spinner"></div>
+                          <div class="mt-sm">جاري تحميل النواقص...</div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════════════════════════════════════════════════
+           💬 PAGE: CHAT
+           ═══════════════════════════════════════════════════════════ -->
+          <div class="page-section d-none" data-page-content="chat">
+            <div class="chat-page">
+              <div class="chat-sidebar">
+                <div class="chat-sidebar-header">
+                  <h2 class="chat-sidebar-title">💬 المحادثات</h2>
+                  <p class="chat-sidebar-subtitle">تنسيق فوري مع فريق الإنتاج</p>
+                </div>
+                <div class="chat-sidebar-search">
+                  <div class="chat-search-input"><i class="fas fa-search chat-search-icon"></i><input type="text"
+                      class="form-input" placeholder="🔎 بحث..." id="chatSearch"></div>
+                </div>
+                <div class="chat-role-filter">
+                  <button class="chat-role-btn active">الكل</button><button class="chat-role-btn">Admin</button><button
+                    class="chat-role-btn">Manager</button><button class="chat-role-btn">Cutting</button><button
+                    class="chat-role-btn">Edge</button><button class="chat-role-btn">CNC</button><button
+                    class="chat-role-btn">Pressing</button><button class="chat-role-btn">Assembly</button><button
+                    class="chat-role-btn">QC</button>
+                </div>
+                <div class="chat-client-list" id="chatClientList">
+                  <div class="chat-empty">
+                    <div class="chat-empty-icon">👥</div>
+                    <div class="chat-empty-title">لا يوجد عملاء</div>
+                  </div>
+                </div>
+              </div>
+              <div class="chat-main">
+                <div class="chat-main-header">
+                  <div class="chat-main-header-left">
+                    <div class="chat-main-avatar" id="chatActiveAvatar">💬</div>
+                    <div class="chat-main-info">
+                      <h3 class="chat-main-name" id="chatActiveName">اختر عميل</h3>
+                      <div class="chat-main-status" id="chatActiveStatus"><span
+                          class="chat-main-status-dot"></span><span>اختر مرحلة للبدء</span></div>
+                    </div>
+                  </div>
+                  <div class="chat-stage-selector">
+                    <label class="chat-stage-label">المرحلة:</label>
+                    <select class="chat-stage-select" id="chatStageSelect">
+                      <option value="">✂ Select a Stage</option>
+                      <option value="cutting">✂️ Cutting</option>
+                      <option value="edge">📏 Edge</option>
+                      <option value="cnc">⚙️ CNC</option>
+                      <option value="pressing">🔩 Pressing</option>
+                      <option value="assembly">🔨 Assembly</option>
+                      <option value="final-qc">✅ Final QC</option>
+                    </select>
+                  </div>
+                  <div class="chat-main-actions">
+                    <button class="btn btn-icon btn-ghost" title="مكالمة"><i class="fas fa-phone"></i></button>
+                    <button class="btn btn-icon btn-ghost" title="فيديو"><i class="fas fa-video"></i></button>
+                    <button class="btn btn-icon btn-ghost" title="معلومات"><i class="fas fa-info-circle"></i></button>
+                  </div>
+                </div>
+                <div class="chat-messages-area" id="chatMessagesArea">
+                  <div class="chat-empty">
+                    <div class="chat-empty-icon">💬</div>
+                    <div class="chat-empty-title">Welcome to Production Chat</div>
+                    <div class="chat-empty-description">Select a client and stage to start messaging</div>
+                  </div>
+                </div>
+                <div class="chat-input-area">
+                  <div class="chat-input-wrapper">
+                    <div class="chat-input-actions">
+                      <button class="chat-input-btn" id="emojiBtn" title="إيموجي"><i class="far fa-smile"></i></button>
+                      <button class="chat-input-btn" title="إرفاق ملف"><i class="fas fa-paperclip"></i></button>
+                      <button class="chat-input-btn" title="صورة"><i class="far fa-image"></i></button>
+                    </div>
+                    <div class="chat-input-field"><textarea id="chatInput" placeholder="اكتب رسالتك هنا..."
+                        rows="1"></textarea></div>
+                    <button class="chat-send-btn" id="chatSendBtn" title="إرسال"><i
+                        class="fas fa-paper-plane"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════════════════════════════════════════════════
+           📊 PAGE: REPORTS
+           ═══════════════════════════════════════════════════════════ -->
+          <div class="page-section d-none" data-page-content="reports">
+            <div class="reports-page">
+              <aside class="reports-sidebar">
+                <div class="reports-sidebar-header">
+                  <h2 class="reports-sidebar-title">🔍 الفلاتر</h2><button class="reports-sidebar-reset">إعادة
+                    تعيين</button>
+                </div>
+                <div class="reports-filter-group">
+                  <label class="reports-filter-label">📅 الفترة الزمنية</label>
+                  <div class="reports-date-range">
+                    <div class="reports-date-field"><label class="reports-date-label">من</label><input type="date"
+                        class="reports-filter-input"></div>
+                    <div class="reports-date-field"><label class="reports-date-label">إلى</label><input type="date"
+                        class="reports-filter-input"></div>
+                  </div>
+                </div>
+                <div class="reports-filter-group">
+                  <label class="reports-filter-label">🏭 المراحل</label>
+                  <div class="reports-stage-filter">
+                    <label class="reports-stage-item"><input type="checkbox" class="reports-stage-checkbox"
+                        checked><span class="reports-stage-label"><span
+                          class="reports-stage-icon">✂️</span><span>Cutting</span></span><span
+                        class="reports-stage-count">12</span></label>
+                    <label class="reports-stage-item"><input type="checkbox" class="reports-stage-checkbox"
+                        checked><span class="reports-stage-label"><span
+                          class="reports-stage-icon">📏</span><span>Edge</span></span><span
+                        class="reports-stage-count">8</span></label>
+                    <label class="reports-stage-item"><input type="checkbox" class="reports-stage-checkbox"
+                        checked><span class="reports-stage-label"><span
+                          class="reports-stage-icon">⚙️</span><span>CNC</span></span><span
+                        class="reports-stage-count">15</span></label>
+                    <label class="reports-stage-item"><input type="checkbox" class="reports-stage-checkbox"><span
+                        class="reports-stage-label"><span
+                          class="reports-stage-icon">🔩</span><span>Pressing</span></span><span
+                        class="reports-stage-count">6</span></label>
+                    <label class="reports-stage-item"><input type="checkbox" class="reports-stage-checkbox"><span
+                        class="reports-stage-label"><span
+                          class="reports-stage-icon">🔨</span><span>Assembly</span></span><span
+                        class="reports-stage-count">10</span></label>
+                    <label class="reports-stage-item"><input type="checkbox" class="reports-stage-checkbox"><span
+                        class="reports-stage-label"><span class="reports-stage-icon">✅</span><span>Final
+                          QC</span></span><span class="reports-stage-count">4</span></label>
+                  </div>
+                </div>
+                <div class="reports-filter-group">
+                  <label class="reports-filter-label">🚦 الحالة</label>
+                  <div class="reports-status-filter">
+                    <label class="reports-status-item"><input type="radio" name="status" class="reports-status-radio"
+                        checked><span class="reports-status-label">الكل</span></label>
+                    <label class="reports-status-item"><input type="radio" name="status"
+                        class="reports-status-radio"><span class="reports-status-label">مكتمل</span></label>
+                    <label class="reports-status-item"><input type="radio" name="status"
+                        class="reports-status-radio"><span class="reports-status-label">قيد التنفيذ</span></label>
+                    <label class="reports-status-item"><input type="radio" name="status"
+                        class="reports-status-radio"><span class="reports-status-label">متأخر</span></label>
+                  </div>
+                </div>
+                <button class="reports-apply-btn"><i class="fas fa-search"></i> تطبيق الفلاتر</button>
+              </aside>
+              <div class="reports-main">
+                <div class="reports-tabs">
+                  <button class="reports-tab active" data-report="production"><span
+                      class="reports-tab-icon">📊</span><span>Production Reports</span><span
+                      class="reports-tab-badge">124</span></button>
+                  <button class="reports-tab" data-report="stages"><span class="reports-tab-icon">🏭</span><span>Stages
+                      Dashboard</span></button>
+                  <button class="reports-tab" data-report="durations"><span
+                      class="reports-tab-icon">⏱️</span><span>Stage Durations</span></button>
+                  <button class="reports-tab" data-report="ready"><span class="reports-tab-icon">✅</span><span>Ready
+                      Projects</span></button>
+                </div>
+                <div class="report-card">
+                  <div class="report-card-header">
+                    <div>
+                      <h3 class="report-card-title">📊 Production Reports</h3>
+                      <p class="report-card-subtitle">تقرير شامل لجميع المشاريع</p>
+                    </div>
+                    <div class="report-card-actions">
+                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-sync"></i> Refresh</button>
+                      <button class="btn btn-sm btn-success"><i class="fas fa-file-excel"></i> Export Excel</button>
+                    </div>
+                  </div>
+                  <div class="report-card-body">
+                    <div class="report-table-wrapper">
+                      <table class="report-table">
+                        <thead>
+                          <tr>
+                            <th class="sortable">Client</th>
+                            <th class="sortable">Project</th>
+                            <th>Item</th>
+                            <th class="sortable">Stage</th>
+                            <th>Technician</th>
+                            <th>Status</th>
+                            <th class="sortable">Duration</th>
+                          </tr>
+                        </thead>
+                        <tbody id="reportsTableBody">
+                          <tr>
+                            <td colspan="7" class="text-center p-lg text-muted">اضغط "Load Report Data" لتحميل البيانات
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="report-card-footer">
+                    <div class="pagination-info">عرض 0 من 0 نتيجة</div>
+                    <div class="pagination-controls">
+                      <button class="pagination-btn" disabled><i class="fas fa-chevron-right"></i></button>
+                      <button class="pagination-btn active">1</button>
+                      <button class="pagination-btn"><i class="fas fa-chevron-left"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="export-section">
+                  <div class="export-section-header">
+                    <h3 class="export-section-title">📤 تصدير البيانات</h3>
+                  </div>
+                  <div class="export-options">
+                    <button class="export-option active"><i class="fas fa-file-excel"></i><span>Excel</span></button>
+                    <button class="export-option"><i class="fas fa-file-pdf"></i><span>PDF</span></button>
+                    <button class="export-option"><i class="fas fa-file-csv"></i><span>CSV</span></button>
+                    <button class="export-option"><i class="fas fa-print"></i><span>طباعة</span></button>
+                  </div>
+                  <div class="export-actions">
+                    <button class="btn btn-primary"><i class="fas fa-download"></i> تصدير الكل</button>
+                    <button class="btn btn-outline-primary"><i class="fas fa-upload"></i> استيراد</button>
+                    <button class="btn btn-ghost"><i class="fas fa-file-download"></i> تحميل ملف نموذجي</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════════════════════════════════════════════════
+           📈 PAGE: STAGES DASHBOARD
+           ═══════════════════════════════════════════════════════════ -->
+          <div class="page-section d-none" data-page-content="stages-dashboard">
+            <div class="reports-page">
+              <div class="reports-main">
+                <div class="report-card">
+                  <div class="report-card-header">
+                    <h3 class="report-card-title">📊 Stages Dashboard</h3><button class="btn btn-sm btn-primary"><i
+                        class="fas fa-sync"></i> Refresh</button>
+                  </div>
+                  <div class="report-card-body">
+                    <div class="report-table-wrapper">
+                      <table class="report-table">
+                        <thead>
+                          <tr>
+                            <th>Client Code</th>
+                            <th>Client Name</th>
+                            <th>Project Name</th>
+                            <th>Last Stage</th>
+                            <th>Stage Status</th>
+                            <th>Overall Status</th>
+                            <th>Update Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td colspan="7" class="text-center p-lg text-muted">
+                              <div class="spinner"></div>
+                              <div class="mt-sm">Loading data...</div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════════════════════════════════════════════════
+           ⏱️ PAGE: STAGE DURATIONS
+           ═══════════════════════════════════════════════════════════ -->
+          <div class="page-section d-none" data-page-content="stage-durations">
+            <div class="reports-page">
+              <div class="reports-main">
+                <div class="report-card">
+                  <div class="report-card-header">
+                    <h3 class="report-card-title">⏱️ Stage Durations</h3><button class="btn btn-sm btn-primary"><i
+                        class="fas fa-sync"></i> Refresh</button>
+                  </div>
+                  <div class="report-card-body">
+                    <div class="report-table-wrapper">
+                      <table class="report-table">
+                        <thead>
+                          <tr>
+                            <th>Client Code</th>
+                            <th>Client Name</th>
+                            <th>Project Name</th>
+                            <th>Stage</th>
+                            <th>Item Name</th>
+                            <th>Technician</th>
+                            <th>Status</th>
+                            <th>Duration</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td colspan="10" class="text-center p-lg text-muted">
+                              <div class="spinner"></div>
+                              <div class="mt-sm">Loading data...</div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════════════════════════════════════════════════
+           ✅ PAGE: READY PROJECTS
+           ═══════════════════════════════════════════════════════════ -->
+          <div class="page-section d-none" data-page-content="ready-projects">
+            <div class="reports-page">
+              <div class="reports-main">
+                <div class="report-card">
+                  <div class="report-card-header">
+                    <h3 class="report-card-title">✅ Ready Projects</h3><button class="btn btn-sm btn-primary"><i
+                        class="fas fa-sync"></i> Refresh</button>
+                  </div>
+                  <div class="report-card-body">
+                    <div class="report-table-wrapper">
+                      <table class="report-table">
+                        <thead>
+                          <tr>
+                            <th>Client Code</th>
+                            <th>Client Name</th>
+                            <th>Project Name</th>
+                            <th>Completion Date</th>
+                            <th>Storage</th>
+                            <th>Supply</th>
+                            <th>Details</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td colspan="7" class="text-center p-lg text-muted">
+                              <div class="spinner"></div>
+                              <div class="mt-sm">Loading data...</div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ═══════════════════════════════════════════════════════════
+           📁 PAGE: PROJECTS
+           ═══════════════════════════════════════════════════════════ -->
+          <div class="page-section d-none" data-page-content="projects">
+            <div class="empty-state">
+              <div class="empty-state-icon">📁</div>
+              <h3 class="empty-state-title">Projects Page</h3>
+              <p class="empty-state-description">Under Development - Coming Soon</p>
+              <button class="btn btn-primary"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
+            </div>
+          </div>
+
+    </main>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       🪟 MODALS
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="shortageModalBackdrop"></div>
+  <div class="modal shortage-modal" id="shortageModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">🔴 إضافة نقص جديد</h3>
+        <button class="modal-close" data-close-modal="shortageModal"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="shortageForm" class="shortage-modal-body">
+          <div class="shortage-form-section">
+            <label class="shortage-form-label required">كود العميل</label>
+            <input type="text" class="shortage-form-input" placeholder="C001" required>
+          </div>
+          <div class="shortage-form-row">
+            <div class="shortage-form-section">
+              <label class="shortage-form-label required">المرحلة</label>
+              <select class="shortage-form-input" required>
+                <option value="">اختر المرحلة</option>
+                <option value="cutting">✂️ Cutting</option>
+                <option value="edge">📏 Edge</option>
+                <option value="cnc">⚙️ CNC</option>
+                <option value="pressing">🔩 Pressing</option>
+                <option value="assembly">🔨 Assembly</option>
+                <option value="final-qc">✅ Final QC</option>
+              </select>
+            </div>
+            <div class="shortage-form-section">
+              <label class="shortage-form-label required">الأولوية</label>
+              <div class="shortage-priority-selector">
+                <div class="shortage-priority-option low">منخفضة</div>
+                <div class="shortage-priority-option medium selected">متوسطة</div>
+                <div class="shortage-priority-option high">عالية</div>
+              </div>
+            </div>
+          </div>
+          <div class="shortage-form-section">
+            <label class="shortage-form-label required">التفاصيل</label>
+            <textarea class="shortage-form-textarea" placeholder="وصف النقص..." required></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" data-close-modal="shortageModal">❌ Cancel</button>
+        <button class="btn btn-primary">💾 Save to Database</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-content">
+      <div class="spinner spinner-lg"></div>
+      <div class="loading-text">جاري التحميل...</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       📜 JAVASCRIPT FILES
+       ═══════════════════════════════════════════════════════════ -->
+  <!-- في نهاية index.html -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Utils -->
+  <script type="module" src="assets/js/config.js"></script>
+  <script type="module" src="assets/js/utils/helpers.js"></script>
+  <script type="module" src="assets/js/utils/formatters.js"></script>
+  <script type="module" src="assets/js/utils/validators.js"></script>
+
+  <!-- Modules -->
+  <script type="module" src="assets/js/modules/i18n.js"></script>
+  <script type="module" src="assets/js/modules/api.js"></script>
+  <script type="module" src="assets/js/modules/auth.js"></script>
+  <script type="module" src="assets/js/modules/router.js"></script>
+  <script type="module" src="assets/js/modules/home.js"></script>
+  <script type="module" src="assets/js/modules/customers.js"></script>
+  <script type="module" src="assets/js/modules/production-flow.js"></script>
+  <script type="module" src="assets/js/modules/kanban.js"></script>
+  <script type="module" src="assets/js/modules/chat.js"></script>
+  <script type="module" src="assets/js/modules/shortages.js"></script>
+  <script type="module" src="assets/js/modules/reports.js"></script>
+  <script type="module" src="assets/js/modules/import-export.js"></script>
+  <script type="module" src="assets/js/modules/glass.js"></script>
+  <script type="module" src="assets/js/modules/stages.js"></script>
+
+  <!-- Main App -->
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+
+</html>
