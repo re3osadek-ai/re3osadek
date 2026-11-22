@@ -1,0 +1,121 @@
+/* ========================================
+   🏭 REAOSADEK - Customers CSS 
+   ======================================== */
+
+.page-section { display: none; }
+.page-section.active { display: block; }
+
+.pt-row-1, .pt-row-2 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
+    margin-bottom: 15px;
+}
+
+.pt-row-2 {
+    align-items: center;
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #0d6efd; 
+}
+
+.pt-row-1 label {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    font-weight: bold;
+    color: #333;
+}
+
+.pt-row-2 .material-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* تصغير الحقول ومنع التمدد */
+.pt-row-1 input[type="text"], 
+.pt-row-2 input[type="text"] {
+    width: 170px !important; 
+    max-width: 170px !important;
+    height: 34px !important;
+    padding: 4px 10px;
+    border: 1px solid #adb5bd;
+    border-radius: 4px;
+    font-size: 13px;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.pt-field-inline { display: flex; gap: 5px; align-items: center; }
+.pt-btn-icon { width: 34px; height: 34px; background: #0d6efd; color: white; border: none; border-radius: 4px; cursor: pointer; }
+
+/* أزرار الحفظ الملونة */
+.pt-btn { padding: 8px 16px; border-radius: 6px; border: 0; cursor: pointer; font-weight: bold; color: #fff; font-size: 13px; display: flex; align-items: center; gap: 5px; }
+.pt-btn-save { background: #28a745; }
+.pt-btn-refresh { background: #6c757d; }
+.pt-btn-save:hover { background: #218838; }
+
+/* قسم الاستيراد والتصدير */
+.pt-export-box {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid #dee2e6;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pt-export-box label { font-weight: bold; color: #495057; }
+.pt-export-box select { padding: 6px 12px; border-radius: 4px; border: 1px solid #ced4da; }
+
+.pt-btn-export { background: #198754; }
+.pt-btn-import { background: #0d6efd; }
+.pt-btn-outline { background: transparent; border: 1px solid #0d6efd; color: #0d6efd; }
+.pt-btn-outline:hover { background: #0d6efd; color: white; }
+
+/* جداول المراحل والتلوين */
+.stage-table-wrapper { margin-bottom: 25px; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #0d6efd; }
+.stage-table-header { background-color: #0d6efd; color: white; padding: 10px 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+.stage-table { width: 100%; border-collapse: collapse; text-align: center; font-size: 13px; background: #fff; }
+.stage-table th { background-color: #adb5bd; color: #fff; padding: 8px; border: 1px solid #dee2e6; white-space: nowrap; }
+.stage-table td { padding: 6px; border: 1px solid #dee2e6; vertical-align: middle; }
+
+/* الألوان */
+.row-status-done { background-color: #d4edda !important; }
+.row-status-shortage { background-color: #f8d7da !important; }
+.row-status-progress { background-color: #fff3cd !important; }
+
+/* شريط الحالة (Pills) */
+.pt-status-bar { background: #e8f5e9; padding: 10px; border-radius: 6px; margin: 15px 0; text-align: center; font-weight: bold; color: #2e7d32; }
+.status-pills { display: flex; justify-content: center; gap: 10px; margin: 15px 0; }
+.status-pill { padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; background: #e9ecef; color: #6c757d; }
+.status-pill.active { background: #28a745; color: white; }
+.status-pill.progress { background: #ffc107; color: black; }
+.status-pill.shortage { background: #dc3545; color: white; }
+
+/* الملاحظات */
+.notes-container { display: flex; flex-direction: column; gap: 5px; min-width: 150px; }
+.notes-history { max-height: 50px; overflow-y: auto; font-size: 11px; text-align: right; background: rgba(0,0,0,0.03); padding: 2px; border-radius: 4px; }
+.notes-input-group { display: flex; gap: 5px; }
+.notes-input-group input { flex: 1; padding: 4px; font-size: 11px; border: 1px solid #ccc; border-radius: 4px; }
+.btn-add-note { background: #0d6efd; color: white; border: none; border-radius: 4px; padding: 0 8px; cursor: pointer; }
+
+/* أزرار الحذف والإضافة */
+.btn-square { width: 28px; height: 28px; border-radius: 4px; border: 0; cursor: pointer; font-weight: bold; display: inline-flex; align-items: center; justify-content: center; }
+.btn-secondary { background: #6c757d; color: #fff; }
+.btn-add { background: #28a745; color: #fff; }
+.btn-del { background: #e74c3c; color: #fff; }
+
+/* أزرار الترتيب */
+.order-controls { display: flex; flex-direction: column; gap: 2px; align-items: center; justify-content: center; }
+.btn-order { background: #495057; color: white; border: none; border-radius: 3px; width: 22px; height: 16px; font-size: 10px; cursor: pointer; }
+.btn-order:hover { background: #212529; }

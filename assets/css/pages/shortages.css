@@ -1,0 +1,1132 @@
+/* ========================================
+   🔴 REAOSADEK - Shortages Page
+   ======================================== */
+
+/* ═══════════════════════════════════════
+   📐 Shortages Page Layout
+   ═══════════════════════════════════════ */
+.shortages-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* ═══════════════════════════════════════
+   🎯 Shortages Hero Section
+   ═══════════════════════════════════════ */
+.shortages-hero {
+  background: linear-gradient(135deg, var(--color-danger) 0%, #dc2626 100%);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  color: var(--color-text-inverse);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.shortages-hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.shortages-hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.shortages-hero-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text-inverse);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.shortages-hero-subtitle {
+  font-size: var(--font-size-base);
+  opacity: 0.9;
+  margin-bottom: var(--spacing-lg);
+}
+
+.shortages-hero-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.shortages-hero-stat {
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all var(--transition-fast);
+}
+
+.shortages-hero-stat:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.shortages-hero-stat-icon {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-xs);
+}
+
+.shortages-hero-stat-value {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+.shortages-hero-stat-label {
+  font-size: var(--font-size-sm);
+  opacity: 0.9;
+}
+
+/* ═══════════════════════════════════════
+   📊 Shortages Stats Cards
+   ═══════════════════════════════════════ */
+.shortages-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.shortages-stat-card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.shortages-stat-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.shortages-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  width: 4px;
+  height: 100%;
+  background-color: var(--stat-color, var(--color-primary));
+}
+
+.shortages-stat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+}
+
+.shortages-stat-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xl);
+  background-color: var(--stat-color-light, var(--color-primary-light));
+  color: var(--stat-color, var(--color-primary));
+}
+
+.shortages-stat-trend {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.shortages-stat-trend.up {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger-dark);
+}
+
+.shortages-stat-trend.down {
+  background-color: var(--color-success-light);
+  color: var(--color-success-dark);
+}
+
+.shortages-stat-value {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  line-height: 1;
+  margin-bottom: var(--spacing-xs);
+}
+
+.shortages-stat-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Stat Color Variants */
+.shortages-stat-card.stat-total {
+  --stat-color: var(--color-danger);
+  --stat-color-light: var(--color-danger-light);
+}
+
+.shortages-stat-card.stat-pending {
+  --stat-color: var(--color-warning);
+  --stat-color-light: var(--color-warning-light);
+}
+
+.shortages-stat-card.stat-resolved {
+  --stat-color: var(--color-success);
+  --stat-color-light: var(--color-success-light);
+}
+
+/* ═══════════════════════════════════════
+   🏭 Stages Breakdown
+   ═══════════════════════════════════════ */
+.shortages-stages-section {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+.shortages-stages-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.shortages-stages-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.shortages-stages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.shortages-stage-card {
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  text-align: center;
+  transition: all var(--transition-base);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.shortages-stage-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--stage-color, var(--color-danger));
+}
+
+.shortages-stage-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  width: 100%;
+  height: 4px;
+  background-color: var(--stage-color, var(--color-danger));
+}
+
+.shortages-stage-card.has-shortages {
+  border-color: var(--stage-color, var(--color-danger));
+  background: linear-gradient(
+    to bottom,
+    var(--stage-color-light, var(--color-danger-light)) 0%,
+    var(--color-surface) 30%
+  );
+}
+
+.shortages-stage-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xl);
+  background-color: var(--stage-color-light, var(--color-danger-light));
+  color: var(--stage-color, var(--color-danger));
+  margin: 0 auto var(--spacing-sm);
+}
+
+.shortages-stage-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-xs);
+}
+
+.shortages-stage-count {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--stage-color, var(--color-danger));
+  line-height: 1;
+  margin-bottom: var(--spacing-xs);
+}
+
+.shortages-stage-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* Stage Color Variants */
+.shortages-stage-card.stage-cutting {
+  --stage-color: var(--color-cutting);
+  --stage-color-light: var(--color-cutting-light);
+}
+
+.shortages-stage-card.stage-edge {
+  --stage-color: var(--color-edge);
+  --stage-color-light: var(--color-edge-light);
+}
+
+.shortages-stage-card.stage-cnc {
+  --stage-color: var(--color-cnc);
+  --stage-color-light: var(--color-cnc-light);
+}
+
+.shortages-stage-card.stage-pressing {
+  --stage-color: var(--color-pressing);
+  --stage-color-light: var(--color-pressing-light);
+}
+
+.shortages-stage-card.stage-assembly {
+  --stage-color: var(--color-assembly);
+  --stage-color-light: var(--color-assembly-light);
+}
+
+.shortages-stage-card.stage-final-qc {
+  --stage-color: var(--color-final-qc);
+  --stage-color-light: var(--color-final-qc-light);
+}
+
+/* ═══════════════════════════════════════
+   📋 Shortages Table
+   ═══════════════════════════════════════ */
+.shortages-table-wrapper {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.shortages-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.shortages-table-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.shortages-table-count {
+  padding: 0.125rem 0.625rem;
+  background-color: var(--color-danger-light);
+  color: var(--color-danger-dark);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.shortages-table-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.shortages-table-filters {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface-hover);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.shortages-filter-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.shortages-filter-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.shortages-filter-input {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-xs);
+  min-width: 120px;
+}
+
+.shortages-filter-select {
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-xs);
+  min-width: 150px;
+  background-color: var(--color-surface);
+  cursor: pointer;
+}
+
+.shortages-table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.shortages-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1000px;
+}
+
+.shortages-table th,
+.shortages-table td {
+  padding: var(--spacing-sm) var(--spacing-md);
+  text-align: start;
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+}
+
+.shortages-table th {
+  background-color: var(--color-surface-hover);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.shortages-table tbody tr {
+  transition: background-color var(--transition-fast);
+}
+
+.shortages-table tbody tr:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.shortages-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Shortage Row States */
+.shortages-table tbody tr.pending {
+  background-color: var(--color-warning-light);
+}
+
+.shortages-table tbody tr.pending:hover {
+  background-color: #fef3c7;
+}
+
+.shortages-table tbody tr.resolved {
+  opacity: 0.7;
+}
+
+.shortages-table tbody tr.resolved td {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+.shortages-table tbody tr.resolved:hover {
+  opacity: 1;
+}
+
+/* Shortage Client Info */
+.shortage-client-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.shortage-client-code {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  font-family: var(--font-family-mono);
+}
+
+.shortage-client-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+/* Shortage Details */
+.shortage-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 300px;
+}
+
+.shortage-description {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  line-height: var(--line-height-relaxed);
+}
+
+.shortage-item {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+/* Shortage Status */
+.shortage-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.shortage-status-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-full);
+  background-color: currentColor;
+}
+
+.shortage-status.pending {
+  background-color: var(--color-warning-light);
+  color: var(--color-warning-dark);
+}
+
+.shortage-status.in-progress {
+  background-color: var(--color-info-light);
+  color: var(--color-info-dark);
+}
+
+.shortage-status.resolved {
+  background-color: var(--color-success-light);
+  color: var(--color-success-dark);
+}
+
+.shortage-status.critical {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger-dark);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Shortage Date */
+.shortage-date {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.shortage-date-main {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+.shortage-date-relative {
+  font-size: 0.6875rem;
+}
+
+/* Shortage Actions */
+.shortage-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.shortage-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.shortage-action-btn:hover {
+  background-color: var(--color-surface-hover);
+  color: var(--color-primary);
+}
+
+.shortage-action-btn.resolve:hover {
+  background-color: var(--color-success-light);
+  color: var(--color-success-dark);
+}
+
+.shortage-action-btn.delete:hover {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger-dark);
+}
+
+/* ═══════════════════════════════════════
+   🎯 Shortage Modal
+   ═══════════════════════════════════════ */
+.shortage-modal .modal-dialog {
+  max-width: 600px;
+}
+
+.shortage-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.shortage-form-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.shortage-form-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+.shortage-form-label.required::after {
+  content: " *";
+  color: var(--color-danger);
+}
+
+.shortage-form-input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  background-color: var(--color-surface);
+  transition: all var(--transition-fast);
+}
+
+.shortage-form-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+  outline: none;
+}
+
+.shortage-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.shortage-form-textarea {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  background-color: var(--color-surface);
+  resize: vertical;
+  min-height: 80px;
+  font-family: var(--font-family);
+  transition: all var(--transition-fast);
+}
+
+.shortage-form-textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+  outline: none;
+}
+
+.shortage-priority-selector {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.shortage-priority-option {
+  flex: 1;
+  padding: var(--spacing-sm);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--transition-fast);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.shortage-priority-option:hover {
+  border-color: var(--color-primary);
+}
+
+.shortage-priority-option.selected {
+  border-color: var(--priority-color, var(--color-primary));
+  background-color: var(--priority-color-light, var(--color-primary-light));
+  color: var(--priority-color, var(--color-primary));
+}
+
+.shortage-priority-option.low {
+  --priority-color: var(--color-info);
+  --priority-color-light: var(--color-info-light);
+}
+
+.shortage-priority-option.medium {
+  --priority-color: var(--color-warning);
+  --priority-color-light: var(--color-warning-light);
+}
+
+.shortage-priority-option.high {
+  --priority-color: var(--color-danger);
+  --priority-color-light: var(--color-danger-light);
+}
+
+/* ═══════════════════════════════════════
+   🎨 Shortage Priority Indicator
+   ═══════════════════════════════════════ */
+.shortage-priority {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.shortage-priority-icon {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-full);
+  background-color: currentColor;
+}
+
+.shortage-priority.low {
+  background-color: var(--color-info-light);
+  color: var(--color-info-dark);
+}
+
+.shortage-priority.medium {
+  background-color: var(--color-warning-light);
+  color: var(--color-warning-dark);
+}
+
+.shortage-priority.high {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger-dark);
+}
+
+.shortage-priority.critical {
+  background-color: var(--color-danger);
+  color: var(--color-text-inverse);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════
+   📊 Shortage Chart
+   ═══════════════════════════════════════ */
+.shortages-chart-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.shortage-chart-card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+  min-height: 300px;
+}
+
+.shortage-chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+}
+
+.shortage-chart-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.shortage-chart-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
+}
+
+/* ═══════════════════════════════════════
+   🎯 Empty State
+   ═══════════════════════════════════════ */
+.shortages-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-3xl) var(--spacing-lg);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.shortages-empty-icon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-md);
+  opacity: 0.3;
+}
+
+.shortages-empty-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-xs);
+}
+
+.shortages-empty-description {
+  font-size: var(--font-size-sm);
+  max-width: 400px;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ═══════════════════════════════════════
+   📱 Shortages Responsive
+   ═══════════════════════════════════════ */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .shortages-hero {
+    padding: var(--spacing-xl);
+  }
+  
+  .shortages-hero-title {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .shortages-hero-stat-value {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .shortages-stages-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+  
+  .shortages-table th,
+  .shortages-table td {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .shortages-hero {
+    padding: var(--spacing-lg);
+  }
+  
+  .shortages-hero-title {
+    font-size: var(--font-size-xl);
+  }
+  
+  .shortages-hero-subtitle {
+    font-size: var(--font-size-sm);
+  }
+  
+  .shortages-hero-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .shortages-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .shortages-stat-value {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .shortages-stages-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .shortages-stage-card {
+    padding: var(--spacing-sm);
+  }
+  
+  .shortages-stage-count {
+    font-size: var(--font-size-xl);
+  }
+  
+  .shortages-table-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .shortages-table-actions {
+    width: 100%;
+  }
+  
+  .shortages-table-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .shortages-filter-group {
+    width: 100%;
+  }
+  
+  .shortages-filter-input,
+  .shortages-filter-select {
+    width: 100%;
+  }
+  
+  .shortage-modal .modal-dialog {
+    max-width: 100%;
+    margin: var(--spacing-md);
+  }
+  
+  .shortage-form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .shortage-priority-selector {
+    flex-direction: column;
+  }
+  
+  .shortages-chart-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .shortages-stages-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .shortages-hero-stat-value {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .shortages-table th,
+  .shortages-table td {
+    padding: var(--spacing-xs);
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* ═══════════════════════════════════════
+   🎬 Shortages Animations
+   ═══════════════════════════════════════ */
+@keyframes fadeInShortage {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.shortages-stat-card,
+.shortages-stage-card,
+.shortages-table tbody tr {
+  animation: fadeInShortage var(--transition-base);
+}
+
+@keyframes pulseDanger {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+  }
+}
+
+.shortages-stage-card.has-shortages {
+  animation: pulseDanger 2s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════
+   🖨️ Shortages Print
+   ═══════════════════════════════════════ */
+@media print {
+  .shortages-hero {
+    background: white !important;
+    color: black !important;
+    border: 1px solid #000;
+  }
+  
+  .shortages-table-actions,
+  .shortages-table-filters,
+  .shortage-actions {
+    display: none !important;
+  }
+  
+  .shortages-table {
+    min-width: 0;
+  }
+  
+  .shortages-table th,
+  .shortages-table td {
+    border: 1px solid #000;
+  }
+  
+  .shortages-stage-card,
+  .shortages-stat-card {
+    break-inside: avoid;
+  }
+}
+
+/* ═══════════════════════════════════════
+   🎨 Shortages Loading State
+   ═══════════════════════════════════════ */
+.shortages-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-3xl);
+  gap: var(--spacing-md);
+}
+
+.shortages-loading-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* Skeleton for Shortages */
+.shortages-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-hover) 0%,
+    var(--color-border) 50%,
+    var(--color-surface-hover) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+.shortages-skeleton-stat {
+  height: 120px;
+  border-radius: var(--radius-lg);
+}
+
+.shortages-skeleton-stage {
+  height: 140px;
+  border-radius: var(--radius-lg);
+}
+
+.shortages-skeleton-row {
+  height: 50px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-xs);
+}
+
+/* ═══════════════════════════════════════
+   🎯 Shortages Utilities
+   ═══════════════════════════════════════ */
+.shortage-highlight {
+  background-color: var(--color-warning-light);
+  padding: 0 var(--spacing-xs);
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.shortage-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.shortage-link:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+.shortage-mono {
+  font-family: var(--font-family-mono);
+  font-size: 0.875em;
+}
+
+/* Age Indicator */
+.shortage-age {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.shortage-age.new {
+  color: var(--color-success);
+}
+
+.shortage-age.recent {
+  color: var(--color-info);
+}
+
+.shortage-age.old {
+  color: var(--color-warning);
+}
+
+.shortage-age.critical {
+  color: var(--color-danger);
+  font-weight: var(--font-weight-bold);
+}
